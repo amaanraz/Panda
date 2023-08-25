@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Lato&display=swap');
+
+.App {
+  text-align: center;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.button {
+  color: black;
+  background-color: white;
+  border: solid;
+  border-radius: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 90px;
+  padding-left: 90px;
+  font-family: 'Inter', sans-serif;
+  font-size: 24pt;
+  text-decoration: none;
+
+  filter: drop-shadow(0px 7px black);
+
+  transition: ease-out 0.3s;
+}
+
+.button:hover {
+  filter: none;
+  cursor: pointer;
+  transform: translateY(7px);
+}
