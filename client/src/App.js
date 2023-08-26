@@ -4,7 +4,9 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 import Start from './pages/Start';
 import Host from './pages/Host';
+import Join from './pages/Join';
 
+// const socket = io.connect("http://localhost:3001/");
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Start />} />
         <Route path='/host' element={<Host />} />
+        <Route path='/join' element={<Join />}/>
       </Routes>
     </Router>
   );
