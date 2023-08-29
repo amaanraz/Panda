@@ -23,10 +23,9 @@ const games = {};
 const activePlayers = {};
 // user connection
 io.on("connection", (socket) => {
-  
   // host game
   socket.on("host-game", (hostData) => {
-    const gamepin = 12345;
+    const gamepin = generateGamePin();
     // TODO: add checking if game exists via game pin
     games[gamepin] = {
       host: { name: hostData.name, socketId: socket.id },
@@ -41,7 +40,8 @@ io.on("connection", (socket) => {
   socket.on("join", (data) => {
     const gamepin = data.gamepin;
     if(games[gamepin]){
-      games[gamepin].players.push({ name: data.name, socketId: socket.id });
+      games[gamepin].players.push({ name: data.name, socketId: socket.id, socket: socket});
+      socket.join(gamepin);
       io.to(games[gamepin].host.socketId).emit('playerJoined', { players: data.name });
 
       // add to active players
@@ -50,9 +50,20 @@ io.on("connection", (socket) => {
         gamepin: data.gamepin,
       };
 
+      // for the join front end to get a message
+      socket.emit('waiting', {gamepin});
     } else {
       // game doesnt exist
       console.log("Game not found");
+    }
+  })
+
+  // host starts game
+  socket.on('start', (data) => {
+    const gamepin = data.gamepin;
+    if(games[gamepin]){
+      const roomName = JSON.stringify(gamepin);
+      io.to(roomName).emit('confirm-start');
     }
   })
 
@@ -60,7 +71,6 @@ io.on("connection", (socket) => {
   socket.on('disconnect', () => {
     if(activePlayers[socket.id]){
       const gamepin = activePlayers[socket.id].gamepin;
-      console.log("disconnected");
       // send disconnected player name to the front end
       io.to(games[gamepin].host.socketId).emit('playerDisconnected', { playerName: activePlayers[socket.id].name })
       delete activePlayers[socket.id];

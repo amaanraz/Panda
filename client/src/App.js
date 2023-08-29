@@ -14,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Start />} />
         <Route path='/host' element={<Host />} />
+        {/* TODO: RENAME JOIN STUFF TO PLAY */}
         <Route path='/join' element={<Join />}/>
       </Routes>
     </Router>

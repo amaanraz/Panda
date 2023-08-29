@@ -1,5 +1,5 @@
-import React from 'react';
-import {useState} from 'react'
+import React, { useEffect, useState} from 'react';
+import {useNavigate} from 'react-router';
 import io from 'socket.io-client';
 // import '../pages/styles/Start.css';
 const socket = io.connect("http://localhost:3001/");
@@ -7,30 +7,65 @@ const socket = io.connect("http://localhost:3001/");
 function Join() {
     const [name, setName] = useState("");
     const [gamepin, setGamepin] = useState("");
+    const [joining, setJoining] =  useState(true);
 
     const joinGame = () => {
         socket.emit("join", {name, gamepin});
 
         // response from server
-        socket.on('playerJoined', (data) => {
-            console.log('Player joined:', data.playerName);
+        socket.on('waiting', () => {
+            console.log('joining id:' , socket.id);
+            setJoining(false);
         });
     };
 
+    useEffect(() => {
+        socket.on('confirm-start', () =>{
+            console.log("HOST STARTING GAME");
+        })
+        return () => {
+            // Cleanup code, executed before the component unmounts.
+            socket.off('confirm-start');
+          };
+    })
+    
   return (
-    <center>
-     Join Game
-     <input placeholder='game pin' 
-        onChange={(event) => {
-            setGamepin(event.target.value);
-        }}/>
-     <input placeholder='name' 
-        onChange={(event) => {
-            setName(event.target.value);
-        }} />
-     <button onClick={joinGame}>Join!</button>
-    </center>
+    <div>
+        {joining ? (
+            <center>
+            Join Game
+            <input placeholder='game pin' 
+               onChange={(event) => {
+                   setGamepin(event.target.value);
+               }}/>
+            <input placeholder='name' 
+               onChange={(event) => {
+                   setName(event.target.value);
+               }} />
+            <button onClick={joinGame}>Join!</button>
+           </center>
+        ): (
+            <Waiting />
+        )}
+    </div>
+    
   );
 }
 
 export default Join;
+
+function Waiting() {
+    const navigate = useNavigate();
+    const leave = () => {
+        navigate(0);
+    }
+    return ( 
+        <div>
+            <h1>Waiting Room</h1>
+            <p> waiting for the host to start</p>
+            <p> if you refresh or leave this page you will be disconnected</p>
+            <button onClick={leave}>Leave</button>
+        </div>        
+     );
+}
+

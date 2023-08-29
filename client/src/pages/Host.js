@@ -24,7 +24,6 @@ function Host() {
     socket.on("playerJoined", (data) => {
       // players.push(data.message);
       setNames((prevPlayerNames) => [...prevPlayerNames,data.players]);
-      console.log(data.players);
     });
 
     socket.on('playerDisconnected', (data) => {
@@ -33,11 +32,17 @@ function Host() {
       );
     });
 
-  }, [socket])
+  }, [socket]);
+
+  // start game
+  const startGame = () => {
+    socket.emit('start', {gamepin});
+  }
 
   return (
     <center>
       <h1>Hosting at: #{gamepin}</h1>
+      <button onClick={startGame}>Start</button>
       <h2>Players:</h2>
         <p>
           {names.map((playerName, index) => (
