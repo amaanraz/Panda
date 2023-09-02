@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import {useNavigate} from 'react-router';
 import io from 'socket.io-client';
+import Answer from '../components/Answer';
 // import '../pages/styles/Start.css';
 const socket = io.connect("http://localhost:3001/");
 
@@ -8,6 +9,7 @@ function Join() {
     const [name, setName] = useState("");
     const [gamepin, setGamepin] = useState("");
     const [joining, setJoining] =  useState(true);
+    const [playing, setPlaying] = useState(false);
 
     const joinGame = () => {
         socket.emit("join", {name, gamepin});
@@ -22,6 +24,8 @@ function Join() {
     useEffect(() => {
         socket.on('confirm-start', () =>{
             console.log("HOST STARTING GAME");
+            // set state playing 
+            setPlaying(true);
         })
         return () => {
             // Cleanup code, executed before the component unmounts.
@@ -45,7 +49,7 @@ function Join() {
             <button onClick={joinGame}>Join!</button>
            </center>
         ): (
-            <Waiting />
+            <Waiting playing={playing}/>
         )}
     </div>
     
@@ -54,17 +58,24 @@ function Join() {
 
 export default Join;
 
-function Waiting() {
+function Waiting(props) {
     const navigate = useNavigate();
     const leave = () => {
         navigate(0);
     }
     return ( 
         <div>
-            <h1>Waiting Room</h1>
-            <p> waiting for the host to start</p>
-            <p> if you refresh or leave this page you will be disconnected</p>
-            <button onClick={leave}>Leave</button>
+            {props.playing ? (
+                <Answer question="White Panda" answers={["answer 1", "ansWer 2", "answer 3", "answer 4"]} socket={socket}/>
+            ): (
+                <div>
+                    <h1>Waiting Room</h1>
+                    <p> waiting for the host to start</p>
+                    <p> if you refresh or leave this page you will be disconnected</p>
+                    <button onClick={leave}>Leave</button>
+                </div>
+            )}
+            
         </div>        
      );
 }
