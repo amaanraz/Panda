@@ -46,13 +46,14 @@ io.on("connection", (socket) => {
     if(games[gamepin]){
       games[gamepin].players.push({ name: data.name, socketId: socket.id, socket: socket});
       socket.join(gamepin);
-      io.to(games[gamepin].host.socketId).emit('playerJoined', { players: data.name });
 
       // add to active players
       activePlayers[socket.id]= {
         name: data.name,
         gamepin: data.gamepin,
       };
+
+      io.to(games[gamepin].host.socketId).emit('playerJoined', { players: data.name, numOfPlayers: Object.keys(activePlayers).length });
 
       userPlayerPoints[socket.id] = [data.name,0,data.gamepin];
 
@@ -89,8 +90,9 @@ io.on("connection", (socket) => {
     } else {
       question = questions[currentQIndex].text
       var answers = questions[currentQIndex].answers;
-      socket.emit('recieve-question', {question, answers})
-      io.to(roomName).emit('recieve-question', {question, answers});
+      var correctAnswer = questions[currentQIndex].correctAnswer;
+      socket.emit('recieve-question', {question, answers, correctAnswer})
+      io.to(roomName).emit('recieve-question', {question, answers, correctAnswer});
     }
   })
 
@@ -108,8 +110,10 @@ io.on("connection", (socket) => {
     if(activePlayers[socket.id]){
       const gamepin = activePlayers[socket.id].gamepin;
       // send disconnected player name to the front end
-      io.to(games[gamepin].host.socketId).emit('playerDisconnected', { playerName: activePlayers[socket.id].name })
+      var temp = activePlayers[socket.id].name;
       delete activePlayers[socket.id];
+      io.to(games[gamepin].host.socketId).emit('playerDisconnected', { playerName: temp, numOfPlayers: Object.keys(activePlayers).length  })
+      delete userPlayerPoints[socket.id];
     }
   })
 })

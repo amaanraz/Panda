@@ -5,22 +5,27 @@ class Delayed extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hidden: true };
+    this.timeoutId = null; // Store the timeout ID
   }
 
   componentDidMount() {
     this.startTimeout();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.hidden && !this.state.hidden) {
-      // If hidden becomes false (component is about to show),
-      // start a new timeout
-      this.startTimeout();
+  componentDidUpdate(prevProps) {
+    if (prevProps.waitBeforeShow !== this.props.waitBeforeShow) {
+      // If the waitBeforeShow prop changes, restart the timeout
+      clearTimeout(this.timeoutId); // Clear the previous timeout
+      this.startTimeout(); // Start a new timeout
     }
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeoutId); // Clear the timeout when unmounting the component
+  }
+
   startTimeout() {
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.setState({ hidden: false });
     }, this.props.waitBeforeShow);
   }

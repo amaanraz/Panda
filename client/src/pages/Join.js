@@ -42,7 +42,7 @@ function Join() {
                onChange={(event) => {
                    setGamepin(event.target.value);
                }}/>
-            <input placeholder='name' 
+            <input placeholder='name' maxlength="10"
                onChange={(event) => {
                    setName(event.target.value);
                }} />

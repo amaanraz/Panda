@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap');
+
+
+.center-box{
+    border: solid;
+    width: 540px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.small{
+    text-align: left;
+    padding-left: 5px;
+    color: #0A0A0A;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.code {
+    color: #000;
+    font-family: Inter;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.line{
+    border: solid;
+    border-width: 1px;
+    margin-top: 30px;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between; /* This separates the two elements to opposite ends */
+    align-items: center; /* Vertically aligns the elements */
+}
+
+.button {
+    color: #0A0A0A;
+    background-color: white;
+    border: solid;
+    border-radius: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 50px;
+    padding-left: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20pt;
+    text-decoration: none;
+    filter: drop-shadow(0px 7px #0A0A0A);
+    transition: ease-out 0.3s;
+    margin-top: 5px;
+  }
+  
+  .button:hover {
+    filter: none;
+    cursor: pointer;
+    transform: translateY(7px);
+  }
+
+  .container{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next row when needed */
+    justify-content: center; 
+  }
+
+  .names{
+    flex-grow: 0;
+    /* Add styling for each item as needed */
+    margin: 5px; 
+    color: #000;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 64px; /* 200% */
+    border-radius: 20px;
+
+    border: 6px solid #000;
+    background: #FFF;
+    box-shadow: 4px 8px 0px 0px #000;
+
+    width: 200px;
+  }
+
+  .names:hover{
+    filter: none;
+    cursor: pointer;
+    transform: translateY(7px);
+    box-shadow: none;
+  }
+
+  

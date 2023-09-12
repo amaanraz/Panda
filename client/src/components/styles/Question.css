@@ -1,11 +1,114 @@
-.root {
-    width: 20px;
-}
 
-.textContainer {
-    height: 100%,
-}
+.card-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    top: 0;
+    left: 0;
 
-.progressContainer{
-    height: 100%;
-}
+    height: 550px;
+  }
+
+  .card{
+    position: absolute;
+    border-radius: 15px;
+    border: 4px solid #000;
+    background: #FFF;
+    box-shadow: 12px 12px 10px 2px rgba(0, 0, 0, 0.25);
+    width: 700px;
+    height: 440px;
+    flex-shrink: 0;
+    margin-top: 50px;
+    margin-bottom: 80px;
+
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 64px; /* 200% */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    z-index: 10; 
+  }
+
+  .question{
+    
+  }
+
+  .stats{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .rotate{
+    transform: rotate(3.01deg); 
+    z-index: 1;
+  }
+
+  .answerContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .answers{
+    border-radius: 15px;
+    border: 4px solid #000;
+    background: #FFF;
+    /* background: #99FF75;  */
+    box-shadow: 12px 12px 10px 2px rgba(0, 0, 0, 0.25);
+
+    width: 40%;
+    height: 30%;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+
+    color: #0C0C0C;
+    text-align: center;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .answers:hover{
+    filter: none;
+    transform: translateY(7px);
+    box-shadow: none;
+  }
+
+  .next-btn{
+    color: black;
+    background-color: white;
+    border: solid;
+    border-radius: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 50px;
+    padding-left: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18pt;
+    text-decoration: none;
+
+    margin-left: 5px;
+
+    filter: drop-shadow(0px 7px black);
+    flex: 1;
+
+    transition: ease-out 0.3s;
+  }
+
+  .next-btn:hover {
+    filter: none;
+    cursor: pointer;
+    transform: translateY(7px);
+  }
